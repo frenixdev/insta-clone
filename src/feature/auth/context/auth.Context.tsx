@@ -7,10 +7,9 @@ import {
   type AuthHandlerContextType,
   type UserResponseType,
 } from "../types/context.types";
-import { getErrMsg } from "@/utils/getErrorMessage";
 import { useNavigate } from "react-router-dom";
 
-const AuthContext = createContext<AuthContextType | null>(null);
+const AuthContext = createContext<AuthContextType | null >(null);
 const AuthHandlerContext = createContext<AuthHandlerContextType | null>(null);
 
 const AuthContextProvider = ({ children }: { children: ReactNode }) => {
@@ -26,7 +25,7 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       setUser(res.data.data);
       navigate("/");
     } catch (error) {
-      setError(getErrMsg(error));
+      setError("something went wrong");
     } finally {
       setIsLoading(false);
     }
@@ -43,7 +42,7 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       setUser(res.data.data);
       navigate("/");
     } catch (error) {
-      setError(getErrMsg(error));
+      setError("something went wrong");
       navigate("/login");
     } finally {
       setIsLoading(false);
@@ -57,7 +56,7 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       setUser(res.data.data);
       navigate("/");
     } catch (error) {
-      setError(getErrMsg(error));
+      setError("something went wrong");
     } finally {
       setIsLoading(false);
     }

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { getOtp, verifyOtp } from "../services/otp.api";
-import { AxiosError } from "axios";
 interface StatusType {
   loading: boolean;
   success: boolean;
@@ -18,7 +17,6 @@ export const useOtp = () => {
   const [verifyOtpResponse, setVerifyOtpResponse] =
     useState<StatusType>(initialVal);
 
-
   const verifyOtpHandler = async (email: string, otp: string) => {
     if (verifyOtpResponse.loading || !email || !otp) return;
     setVerifyOtpResponse({ ...initialVal, loading: true });
@@ -27,26 +25,18 @@ export const useOtp = () => {
       await verifyOtp(email, otp);
       setVerifyOtpResponse((prev) => ({ ...prev, success: true }));
     } catch (error) {
-      const errMsg =
-        error instanceof AxiosError
-          ? error.response.data.message || error.response.data
-          : "something went wrong";
-
       setVerifyOtpResponse((prev) => ({
         ...prev,
         loading: false,
-        error: errMsg,
+        error: "something went wrong",
       }));
     } finally {
       setVerifyOtpResponse((prev) => ({ ...prev, loading: false }));
     }
   };
 
-
-
   const getOtpHandler = async (email: string) => {
     if (getOtpResponse.loading || !email) return;
-
 
     setGetOtpResponse({ ...initialVal, loading: true });
     console.log("ehllo");
@@ -58,14 +48,10 @@ export const useOtp = () => {
         return newVal;
       });
     } catch (error) {
-      const errMsg =
-        error instanceof AxiosError
-          ? error.response.data.message || error.response.data
-          : "something went wrong";
       setGetOtpResponse((prev) => ({
         ...prev,
         loading: false,
-        error: errMsg,
+        error: "something went wrong",
       }));
     } finally {
       setGetOtpResponse((prev) => ({ ...prev, loading: false }));

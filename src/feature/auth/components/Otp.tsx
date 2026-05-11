@@ -6,7 +6,7 @@ import Loader from "@/components/Loader";
 import { FcOk } from "react-icons/fc";
 import ErrorText from "@/components/ErrorText";
 
-const Otp = ({ email }) => {
+const Otp = ({ email }:{email: string}) => {
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
   const { getOtpHandler, verifyOtpHandler, getOtpSent, isLoading, isVerified } =
