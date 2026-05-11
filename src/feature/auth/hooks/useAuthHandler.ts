@@ -1,7 +1,14 @@
 import { useContext } from "react";
-import { AuthHandlerContext } from "../context/auth.Context.tsx";
+import { AuthHandlerContext } from "../context/auth.Context";
+
 export const useAuthHandler = () => {
-  const { loginHandler, profileHandler, registerHandler } =
-    useContext(AuthHandlerContext);
-  return { loginHandler, profileHandler, registerHandler } as const;
+  const context = useContext(AuthHandlerContext);
+
+  if (!context) {
+    throw new Error(
+      "useAuthHandler must be used within AuthContextProvider"
+    );
+  }
+
+  return context;
 };

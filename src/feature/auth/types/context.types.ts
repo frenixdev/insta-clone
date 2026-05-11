@@ -21,7 +21,9 @@ export interface AuthContextType {
   error: string | null;
 }
 export interface AuthHandlerContextType {
-  loginHandler?: (data: LoginUserType) => Promise<void>;
-  registerHandler?: ({email, password, username}: RegisterType) => Promise<void>;
-  profileHandler?: () => Promise<void>;
+  loginHandler: (data: LoginUserType) => Promise<void>;
+  registerHandler: (
+    data: RegisterType
+  ) => Promise<void>;
+  profileHandler: () => Promise<void>;
 }
