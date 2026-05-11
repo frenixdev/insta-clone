@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const api = axios.create({
-  // baseURL: import.meta.env.VITE_BACKEND_URL + "/api/otp",
-  baseURL: "http://localhost:3000/api/otp",
+  baseURL: import.meta.env.VITE_BACKEND_URL + "/api/otp",
+  // baseURL: "http://localhost:3000/api/otp",
 });
 
 export const verifyOtp = async (email: string, otp: string) => {
