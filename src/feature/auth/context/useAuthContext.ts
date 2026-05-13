@@ -16,7 +16,7 @@ export function useAuth() {
       setUser(res.data.data);
       navigate("/");
     } catch (error) {
-      setError(error);
+      setError("error occured");
       console.log(error);
     } finally {
       setIsLoading(false);
@@ -31,7 +31,7 @@ export function useAuth() {
       setUser(res.data.data);
       navigate("/");
     } catch (error) {
-      setError(error);
+      setError("error occured");
       console.log(error);
     } finally {
       setIsLoading(false);
