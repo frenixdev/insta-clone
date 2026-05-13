@@ -1,13 +1,15 @@
-import { useEffect } from "react"
-import { useNavigate } from "react-router-dom"
+import { useAuth } from "../../auth/context/useAuthContext"
 
 const Home = () => {
-  const navigate = useNavigate()
-  useEffect(()=>{
-    navigate("/register")
-  },[])
+  const {user} = useAuth()
+  if (!user) return <></>
   return (
-    <div>Home</div>
+    <div>
+      <p>
+        {user.username}
+        hello
+      </p>
+    </div>
   )
 }
 

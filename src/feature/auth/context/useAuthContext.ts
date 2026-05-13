@@ -1,17 +1,41 @@
-import { use } from "react";
-import { AuthContext, AuthHandlerContext } from "./auth.Context";
+import {  useNavigate } from "react-router-dom";
+import { loginUser, registerUser } from "../services/auth.api";
+import type { LoginUserType, RegisterType } from "../types/auth.types";
+import { useAuthContext } from "./auth.Context";
 
 export function useAuth() {
-  const context = use(AuthContext);
-  if (!context) {
-    throw new Error("useAuth must be used within AuthProvider");
-  }
-  return context;
-}
+  const { error, isLoading, user, setError, setIsLoading, setUser } =
+    useAuthContext();
+  const navigate = useNavigate();
 
-export function useAuthHandler() {
-  const context = use(AuthHandlerContext);
-  if (!context)
-    throw new Error("useAuthHandler must be used within AuthProvider");
-  return context;
+  const register = async ({ email, password, username }: RegisterType) => {
+    if (!email || !password || !username) return;
+    try {
+      setIsLoading(true);
+      const res = await registerUser({ email, password, username });
+      setUser(res.data.data);
+      navigate("/");
+    } catch (error) {
+      setError(error);
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const login = async ({ username, password }: LoginUserType) => {
+    if (!password || !username) return;
+    try {
+      setIsLoading(true);
+      const res = await loginUser({ password, username });
+      setUser(res.data.data);
+      navigate("/");
+    } catch (error) {
+      setError(error);
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+  return { error, isLoading, user, register, login } as const;
 }
