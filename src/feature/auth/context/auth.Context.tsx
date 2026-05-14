@@ -1,7 +1,7 @@
 import { createContext, use, useEffect, useState, type ReactNode } from "react";
-import type { AuthContextType, UserResponseType } from "../types/context.types";
+import type { AuthContextType, UserResponseType } from "@auth/types/context.types";
 import { useNavigate } from "react-router-dom";
-import { getMe } from "../services/auth.api";
+import { getMe } from "@auth/services/auth.api";
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
@@ -11,25 +11,19 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  const profile = async () => {
-    try {
-      const res = await getMe();
-      if (res) setUser(res.data.data);
-    } catch (error) {
-      console.log(error);
-      navigate("/login");
-    }
-  };
+
   useEffect(() => {
-    (async () => {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        navigate("/login");
-        return;
+    const getProfile = async ()=>{
+      try {
+        const res = await getMe()
+        setUser(res.data)
+        navigate("/")
+      } catch (error) {
+        console.log(error)
+        navigate("/login")
       }
-      await profile();
-      navigate("/");
-    })();
+    }
+    getProfile()
   }, []);
 
   const contextValue = {

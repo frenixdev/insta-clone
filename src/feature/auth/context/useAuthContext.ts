@@ -1,5 +1,5 @@
 import {  useNavigate } from "react-router-dom";
-import { loginUser, registerUser } from "../services/auth.api";
+import { loginUser, logoutUser, registerUser } from "../services/auth.api";
 import type { LoginUserType, RegisterType } from "../types/auth.types";
 import { useAuthContext } from "./auth.Context";
 
@@ -13,7 +13,7 @@ export function useAuth() {
     try {
       setIsLoading(true);
       const res = await registerUser({ email, password, username });
-      setUser(res.data.data);
+      setUser(res.data);
       navigate("/");
     } catch (error) {
       setError("error occured");
@@ -28,7 +28,7 @@ export function useAuth() {
     try {
       setIsLoading(true);
       const res = await loginUser({ password, username });
-      setUser(res.data.data);
+      setUser(res.data);
       navigate("/");
     } catch (error) {
       setError("error occured");
@@ -37,5 +37,16 @@ export function useAuth() {
       setIsLoading(false);
     }
   };
-  return { error, isLoading, user, register, login } as const;
+  const logout = async()=>{
+    try {
+      console.log("hello")
+      await logoutUser()
+      setUser(null)
+      navigate("/login")
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  return { error, isLoading, user, register, login , logout} as const;
 }

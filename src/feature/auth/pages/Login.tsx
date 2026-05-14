@@ -3,17 +3,19 @@ import Button from "../components/Button";
 import Input from "../components/Input";
 import { useState, type SubmitEvent } from "react";
 import { useAuth } from "../context/useAuthContext";
+import Loader from "../../../components/Loader";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useAuth();
+  const { login, isLoading, user } = useAuth();
 
   const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     await login({ username, password });
     console.log("logged in");
   };
+
   return (
     <main className="w-full h-screen  flex items-center justify-center">
       <div className="form-container w-100 bg-zinc-900 p-4 rounded-md ">
@@ -28,7 +30,7 @@ const Login = () => {
           <Input
             name="password"
             placeholder="password"
-            type="password"
+            type="text"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
@@ -36,7 +38,9 @@ const Login = () => {
             type="submit"
             className="bg-red-800 hover:bg-red-900 h-10 font-semibold tracking-wider"
           >
-            Login
+            {
+              isLoading? <Loader/>: user? "Logged in": "Login"
+            }
           </Button>
         </form>
         <p className="text-sm mt-5 text-zinc-400">
