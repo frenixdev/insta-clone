@@ -1,19 +1,19 @@
 import Loader from "../../../components/Loader";
-import Button from "../../auth/components/Button";
+import LogoutBtn from "../../auth/components/LogoutBtn";
 import { useAuth } from "../../auth/context/useAuthContext";
 
 const Home = () => {
-  const { user, logout } = useAuth();
-  if (!user) return <Loader />;
-  const submitHandler = async () => {
-    await logout();
-  };
+  const { user } = useAuth();
+  if (!user)
+    return (
+      <main className="h-screen w-full">
+        <Loader />;
+      </main>
+    );
   return (
     <div>
       <p>{user.username}</p>
-      <Button onClick={submitHandler}
-      className="bg-red-500 px-3 py-1 hover:bg-red-600"
-      >Logout</Button>
+      <LogoutBtn />
     </div>
   );
 };

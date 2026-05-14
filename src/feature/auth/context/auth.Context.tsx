@@ -19,7 +19,6 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         setUser(res.data)
         navigate("/")
       } catch (error) {
-        console.log(error)
         navigate("/login")
       }
     }

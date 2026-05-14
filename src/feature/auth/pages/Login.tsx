@@ -13,7 +13,6 @@ const Login = () => {
   const handleSubmit = async (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault();
     await login({ username, password });
-    console.log("logged in");
   };
 
   return (
