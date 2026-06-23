@@ -2,11 +2,11 @@ import { useState, type ChangeEvent } from "react";
 import Button from "./Button";
 import Input from "./Input";
 import { useOtp } from "../hooks/useOtp";
-import Loader from "@/components/Loader";
+import Loader from "@/shared/components/Loader";
 import { FcOk } from "react-icons/fc";
-import ErrorText from "@/components/ErrorText";
+import ErrorText from "@/shared/components/ErrorText";
 
-const Otp = ({ email }:{email: string}) => {
+const Otp = ({ email }: { email: string }) => {
   const [otp, setOtp] = useState("");
   const [error, setError] = useState("");
   const { getOtpHandler, verifyOtpHandler, getOtpSent, isLoading, isVerified } =
@@ -64,13 +64,13 @@ const Otp = ({ email }:{email: string}) => {
       </div>
       {getOtpSent && !error && !isVerified && (
         <div className=" flex items-center justify-start">
-          <p className="text-sm tracking-wide text-green-500 px-2">{statusText()}</p>
-         {isVerified &&  <FcOk className="text-sm" />}
+          <p className="text-sm tracking-wide text-green-500 px-2">
+            {statusText()}
+          </p>
+          {isVerified && <FcOk className="text-sm" />}
         </div>
       )}
-      {
-        error && <ErrorText text={error}/>
-      }
+      {error && <ErrorText text={error} />}
     </div>
   );
 };

@@ -1,16 +1,15 @@
-import { Route, Routes } from "react-router-dom";
-import Register from "./feature/auth/pages/Register";
-import Home from "./feature/Home/pages/Home";
-import Login from "./feature/auth/pages/Login";
+import { useEffect } from "react";
+import { RouterProvider } from "react-router-dom";
+import router from "./app.routes";
+import useAuthStore from "@/feature/auth/Store/auth.store";
+import "react-loading-skeleton/dist/skeleton.css";
 
 const App = () => {
-  return (
-    <Routes>
-      <Route path={"/"} element={<Home />} />
-      <Route path={"/register"} element={<Register />} />
-      <Route path={"/login"} element={<Login />} />
-    </Routes>
-  );
+  const checkAuth = useAuthStore((e) => e.checkAuth);
+  useEffect(() => {
+    checkAuth();
+  }, []);
+  return <RouterProvider router={router} />;
 };
 
 export default App;

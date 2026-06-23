@@ -8,7 +8,15 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
-      "@auth": path.resolve(__dirname,"./src/feature/auth")
+      "@auth": path.resolve(__dirname, "./src/feature/auth"),
     },
   },
+  // server: {
+  //   proxy: {
+  //     "/api": {
+  //       target: "http://localhost:3000",
+  //       changeOrigin: true,
+  //     },
+  //   },
+  // },
 });
