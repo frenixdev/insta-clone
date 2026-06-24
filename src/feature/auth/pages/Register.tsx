@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Loader from "@/shared/components/Loader";
 import Input from "@auth/components/Input";
 import Button from "@auth/components/Button";
-import Otp from "@auth/components/Otp";
+// import Otp from "@auth/components/Otp";
 import useAuthStore from "../Store/auth.store";
 import { useShallow } from "zustand/shallow";
 

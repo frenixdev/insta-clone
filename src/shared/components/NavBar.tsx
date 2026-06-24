@@ -1,7 +1,7 @@
 import { FaInstagram } from "react-icons/fa";
 import { GoPlus } from "react-icons/go";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { Link, NavLink } from "react-router-dom";
+import {  NavLink } from "react-router-dom";
 import Img from "./Img";
 
 type Props = {

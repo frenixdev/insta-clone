@@ -2,6 +2,7 @@ import { create } from "zustand";
 import { getErrMsg } from "@/shared/utils";
 import type { PostPropsType } from "../types";
 import { getFeed, toggleLike } from "../services/feed.services";
+import { AxiosError } from "axios";
 
 interface FeedStoreType {
   feed: PostPropsType[];
@@ -16,7 +17,7 @@ const useFeedStore = create<FeedStoreType>((set, get) => ({
   getFeed: async () => {
     try {
       const { data } = await getFeed();
-      
+
       const { feed, liked } = data;
       const likedPostIds = new Set(liked);
       const newFeed = feed.map((post) => ({
@@ -26,6 +27,7 @@ const useFeedStore = create<FeedStoreType>((set, get) => ({
       set({ feed: newFeed });
     } catch (err) {
       console.log(err);
+      if(err instanceof Error || err instanceof AxiosError)
       set({ error: getErrMsg(err) });
     }
   },

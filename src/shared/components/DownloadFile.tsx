@@ -1,7 +1,6 @@
 import { useState } from "react";
 import Button from "../../feature/auth/components/Button";
 import { downloadFile } from "../utils";
-import { FaSignInAlt } from "react-icons/fa";
 import { CiSaveDown2 } from "react-icons/ci";
 import { FiRefreshCcw } from "react-icons/fi";
 import Loader from "./Loader";

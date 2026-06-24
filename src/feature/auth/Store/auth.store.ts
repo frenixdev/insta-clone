@@ -2,7 +2,6 @@ import { create } from "zustand";
 import * as services from "../services/auth.api";
 import * as AuthTypes from "../types";
 import axios from "axios";
-import { redirect } from "react-router-dom";
 
 interface AuthStoreType {
   user: AuthTypes.UserResponseType | null;
@@ -38,7 +37,8 @@ const useAuthStore = create(
     login: async (data) => {
       const validationErr: Record<string, string> = {};
       for (const key in data) {
-        if (!data[key].trim()) validationErr[key] = key + " is required";
+        const value = data[key as keyof AuthTypes.LoginUserType];
+        if (!value.trim()) validationErr[key] = `${key} is required`;
       }
       if (Object.keys(validationErr).length) {
         set({ errors: validationErr });
@@ -54,14 +54,16 @@ const useAuthStore = create(
         if (axios.isAxiosError(err)) {
           set({ errors: err.response?.data?.errors || {} });
         }
+        return false;
       } finally {
         set({ isLoading: false });
       }
     },
     register: async (data) => {
-      let validationErr: Record<string, string>;
+      let validationErr: Record<string, string> = {};
       for (const key in data) {
-        if (!data[key].trim()) validationErr[key] = key + " is required";
+        const value = data[key as keyof AuthTypes.RegisterType];
+        if (!value.trim()) validationErr[key] = key + " is required";
       }
       // if (!Object.keys(validationErr).length) {
       //   set({ errors: validationErr });
