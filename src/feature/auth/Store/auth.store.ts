@@ -12,7 +12,7 @@ interface AuthStoreType {
   clearErrors: () => void;
   logout: () => Promise<void>;
   checkAuth: () => Promise<void>;
-  login: (data: AuthTypes.LoginUserType) => Promise<boolean>;
+  login: (data: AuthTypes.LoginUserType) => Promise<boolean | undefined>;
   register: (data: AuthTypes.RegisterType) => Promise<void>;
 }
 
