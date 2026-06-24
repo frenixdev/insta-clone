@@ -16,6 +16,7 @@ const useFeedStore = create<FeedStoreType>((set, get) => ({
   getFeed: async () => {
     try {
       const { data } = await getFeed();
+      
       const { feed, liked } = data;
       const likedPostIds = new Set(liked);
       const newFeed = feed.map((post) => ({
