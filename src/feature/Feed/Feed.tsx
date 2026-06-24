@@ -18,8 +18,8 @@ const Feed = () => {
   return (
     <section className="w-full flex items-center justify-center flex-col md:pt-5">
       {feed.length == 0
-        ? new Array(10).fill(null).map((_) => <PostSkeleton />)
-        : feed.map((post) => <Post {...post} toggleLike={toggleLike} />)}
+        ? new Array(10).fill(null).map((_, index) => <PostSkeleton key={index} />)
+        : feed.map((post) => <Post key={post._id} {...post} toggleLike={toggleLike} />)}
     </section>
   );
 };

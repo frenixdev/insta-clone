@@ -12,7 +12,6 @@ const Img = ({ width, height, className, ...props }: Props) => {
 
   useEffect(() => {
     if (imgRef.current?.complete) setIsLoading(false);
-    setIsLoading(false);
   }, []);
 
   return (

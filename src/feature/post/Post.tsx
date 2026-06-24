@@ -19,7 +19,7 @@ const Post = memo((props: Props) => {
   const [showHeart, setShowHeart] = useState(false);
   const timerRef = useRef<number | null>(null);
   const { isLiked, toggleLike } = props;
-
+  // console.log("props ", props)
   const showLikeAnimation = () => {
     if (timerRef.current) clearTimeout(timerRef.current);
     setShowHeart(true);
@@ -65,7 +65,9 @@ const Post = memo((props: Props) => {
         )}
         <Img src={props?.imageUrl} alt="user-post" height="80dvh" />
       </div>
-      <div className="p-3 flex items-center justify-between">
+      <p className="m-2 font-semibold text-zinc-200">{props.caption}</p>
+      <div className="px-3 flex items-center justify-between">
+
         <div className="left flex gap-5 items-center justify-center">
           <div className="flex items-center justify-center gap-1 text-xl">
             <Button onClick={handleLikeClick}>
