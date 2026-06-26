@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Button from "../../feature/auth/components/Button";
-import { downloadFile } from "../utils";
+import Button from "./Button";
+import { downloadFile } from "../utils/downloadFile";
 import { CiSaveDown2 } from "react-icons/ci";
 import { FiRefreshCcw } from "react-icons/fi";
 import Loader from "./Loader";
@@ -19,9 +19,9 @@ const DownloadFile = (props: Props) => {
     try {
       await downloadFile(props.imgUrl, props.title);
     } catch (error) {
-      console.log('Download Failed: ',error);
+      console.log("Download Failed: ", error);
       setIsError(true);
-      setTimeout(()=> setIsError(false), 3000)
+      setTimeout(() => setIsError(false), 3000);
     } finally {
       setIsDownloading(false);
     }

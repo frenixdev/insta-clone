@@ -1,7 +1,7 @@
 import { useState, type ChangeEvent } from "react";
-import Button from "./Button";
-import Input from "./Input";
-import { useOtp } from "../hooks/useOtp";
+import Button from "../../../../shared/components/Button";
+import Input from "../../../../shared/components/Input";
+import { useOtp } from "../../hooks/useOtp";
 import Loader from "@/shared/components/Loader";
 import { FcOk } from "react-icons/fc";
 import ErrorText from "@/shared/components/ErrorText";

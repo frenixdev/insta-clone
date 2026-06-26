@@ -1,14 +1,12 @@
-import Button from "../auth/components/Button";
-import useAuthStore from "../auth/Store/auth.store";
+import LogoutBtn from "../auth/components/LogoutBtn";
+// import useAuthStore from "../auth/store/auth.store";
 
 const Profile = () => {
-  const logout = useAuthStore((s) => s.logout);
-  
+  // const user = useAuthStore();
+
   return (
     <div>
-      <Button className="px-5 py-2 bg-red-500" onClick={logout}>
-        Logout
-      </Button>
+      <LogoutBtn />
     </div>
   );
 };

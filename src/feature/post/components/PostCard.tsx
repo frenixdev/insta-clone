@@ -1,25 +1,21 @@
-import type { PostPropsType } from "../Feed/types";
-
-import { getTimeAgo } from "@/shared/utils";
-import { FaHeart, FaRegComment } from "react-icons/fa";
 import { memo, useRef, useState } from "react";
+import { motion } from "motion/react";
 import { FiHeart } from "react-icons/fi";
-
-import Button from "@/feature/auth/components/Button";
-import Img from "@/shared/components/Img";
-import { PiShareFatLight } from "react-icons/pi";
 import { CiBookmark } from "react-icons/ci";
-import DownloadFile from "@/shared/components/DownloadFile";
+import { PiShareFatLight } from "react-icons/pi";
+import { FaHeart, FaRegComment } from "react-icons/fa";
 
-interface Props extends PostPropsType {
-  toggleLike: (postId: string) => Promise<void>;
-}
+import { getTimeAgo } from "@/shared";
+import { Img, Button, DownloadFile } from "@/shared";
 
-const Post = memo((props: Props) => {
+import type { PostPropsType } from "../types";
+import { IoTrashBinOutline } from "react-icons/io5";
+
+const PostCard = memo((props: PostPropsType) => {
   const [showHeart, setShowHeart] = useState(false);
   const timerRef = useRef<number | null>(null);
   const { isLiked, toggleLike } = props;
-  // console.log("props ", props)
+
   const showLikeAnimation = () => {
     if (timerRef.current) clearTimeout(timerRef.current);
     setShowHeart(true);
@@ -37,7 +33,12 @@ const Post = memo((props: Props) => {
   };
 
   return (
-    <article className="md:w-120 p-2 mx-auto font-bold tracking-wide">
+    <motion.article
+      layout
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="md:w-120 p-2 mx-auto font-bold tracking-wide"
+    >
       <div className="top flex items-center justify-between p-3">
         <div className="left flex items-center justify-center gap-3 ">
           <div className="w-9 aspect-square  rounded-full overflow-hidden">
@@ -52,10 +53,14 @@ const Post = memo((props: Props) => {
             {getTimeAgo(props.createdAt)}
           </span>
         </div>
-
-        <Button className="text-sm  bg-zinc-800 px-3  hover:bg-zinc-700 ">
-          Follow
-        </Button>
+        {props.isAuthor && (
+          <Button
+            className=" text-red-500 hover:text-red-600 text-2xl "
+            onClick={() => props.deletePost(props._id)}
+          >
+            <IoTrashBinOutline />
+          </Button>
+        )}
       </div>
       <div className="w-full relative" onDoubleClick={handleImageLike}>
         {showHeart && (
@@ -65,9 +70,7 @@ const Post = memo((props: Props) => {
         )}
         <Img src={props?.imageUrl} alt="user-post" height="80dvh" />
       </div>
-      <p className="m-2 font-semibold text-zinc-200">{props.caption}</p>
       <div className="px-3 flex items-center justify-between">
-
         <div className="left flex gap-5 items-center justify-center">
           <div className="flex items-center justify-center gap-1 text-xl">
             <Button onClick={handleLikeClick}>
@@ -100,8 +103,18 @@ const Post = memo((props: Props) => {
           </Button>
         </div>
       </div>
-    </article>
+      {props.caption && (
+        <p className="m-2 p-.5">
+          <span className="font-semibold text-zinc-300 mr-2">
+            {props.author.username}
+          </span>
+          <span className="font-normal text-zinc-400 text-md">
+            {props.caption}
+          </span>
+        </p>
+      )}
+    </motion.article>
   );
 });
 
-export default Post;
+export default PostCard;

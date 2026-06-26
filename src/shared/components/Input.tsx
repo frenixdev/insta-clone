@@ -1,7 +1,7 @@
 import type React from "react";
 import { MdError } from "react-icons/md";
 
-interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
+interface Props extends React.ComponentProps<"input"> {
   label?: string;
   err?: string;
 }

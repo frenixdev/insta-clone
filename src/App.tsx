@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { RouterProvider } from "react-router-dom";
 import router from "./app.routes";
-import useAuthStore from "@/feature/auth/Store/auth.store";
+import useAuthStore from "@/feature/auth/store/auth.store";
 import "react-loading-skeleton/dist/skeleton.css";
 
 const App = () => {

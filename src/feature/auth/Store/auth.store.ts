@@ -7,9 +7,11 @@ interface AuthStoreType {
   user: AuthTypes.UserResponseType | null;
   isLoading: boolean;
   isCheckingAuth: boolean;
-  errors: Record<string, string> | null;
-  clearError: (name: string) => void;
-  clearErrors: () => void;
+  validationErrors: Record<string, string> | null;
+  error: string | null;
+  clearValidationError: (name: string) => void;
+  clearAllErrors: () => void;
+  clearError: () => void;
   logout: () => Promise<void>;
   checkAuth: () => Promise<void>;
   login: (data: AuthTypes.LoginUserType) => Promise<boolean | undefined>;
@@ -21,19 +23,20 @@ const useAuthStore = create(
     user: null,
     isLoading: false,
     isCheckingAuth: true,
-    errors: null,
-
-    clearError: (name) => {
+    validationErrors: null,
+    error: null,
+    clearValidationError: (name) => {
       set((state) => {
-        const newErr = { ...state.errors };
+        const newErr = { ...state.validationErrors };
         delete newErr[name];
         return {
-          errors: newErr,
+          ...state,
+          validationErrors: newErr,
         };
       });
     },
-    clearErrors: () => set({ errors: null }),
-
+    clearAllErrors: () => set({ error: null, validationErrors: null }),
+    clearError: () => set({ error: null }),
     login: async (data) => {
       const validationErr: Record<string, string> = {};
       for (const key in data) {
@@ -41,18 +44,26 @@ const useAuthStore = create(
         if (!value.trim()) validationErr[key] = `${key} is required`;
       }
       if (Object.keys(validationErr).length) {
-        set({ errors: validationErr });
+        set({ validationErrors: validationErr });
         return;
       }
       try {
-        set({ isLoading: true, errors: null });
+        set({ isLoading: true, validationErrors: null });
         const { username, password } = data;
         const res = await services.loginUser({ username, password });
         set({ user: res.data });
         return true;
       } catch (err) {
         if (axios.isAxiosError(err)) {
-          set({ errors: err.response?.data?.errors || {} });
+          const data = err?.response?.data;
+          if (data?.errors) {
+            set({ validationErrors: data?.errors || {}, error: null });
+          } else {
+            set({
+              error: data?.message ?? "Something went wrong",
+              validationErrors: null,
+            });
+          }
         }
         return false;
       } finally {
@@ -62,21 +73,29 @@ const useAuthStore = create(
     register: async (data) => {
       let validationErr: Record<string, string> = {};
       for (const key in data) {
-        const value = data[key as keyof AuthTypes.RegisterType];
-        if (!value.trim()) validationErr[key] = key + " is required";
+        const value = data[key as keyof AuthTypes.LoginUserType];
+        if (!value.trim()) validationErr[key] = `${key} is required`;
       }
-      // if (!Object.keys(validationErr).length) {
-      //   set({ errors: validationErr });
-      //   return;
-      // }
+      if (Object.keys(validationErr).length) {
+        set({ validationErrors: validationErr });
+        return;
+      }
       try {
-        set({ isLoading: true, errors: null });
+        set({ isLoading: true, validationErrors: null });
         const { username, password, email } = data;
         const res = await services.registerUser({ email, password, username });
         set({ user: res.data });
       } catch (err) {
         if (axios.isAxiosError(err)) {
-          set({ errors: err.response?.data?.errors || {} });
+          const data = err?.response?.data;
+          if (data?.errors) {
+            set({ validationErrors: data?.errors || {}, error: null });
+          } else {
+            set({
+              error: data?.message ?? "Something went wrong",
+              validationErrors: null,
+            });
+          }
         }
       } finally {
         set({ isLoading: false });

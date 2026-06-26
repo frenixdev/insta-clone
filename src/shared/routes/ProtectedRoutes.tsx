@@ -1,5 +1,5 @@
 import PageLoader from "@/shared/components/PageLoader";
-import useAuthStore from "../Store/auth.store";
+import useAuthStore from "../../feature/auth/store/auth.store";
 import { Navigate, Outlet } from "react-router-dom";
 import { SkeletonTheme } from "react-loading-skeleton";
 import NavBar from "@/shared/components/NavBar";

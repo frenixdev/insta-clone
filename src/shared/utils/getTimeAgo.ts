@@ -1,13 +1,3 @@
-import { AxiosError } from "axios";
-
-export function getErrMsg(err: AxiosError | Error): string {
-  let msg: string = ""
-  if (err instanceof Error) msg = err?.message;
-  if (err instanceof AxiosError) msg = err?.message;
-
-  return msg || "something went wrong";
-}
-
 export function getTimeAgo(date: string) {
   const now = new Date().getTime();
   const createdAt = new Date(date).getTime();
@@ -28,19 +18,3 @@ export function getTimeAgo(date: string) {
 
   return `${year}y`;
 }
-export const downloadFile = async (
-  url: string,
-  fileName: string
-) => {
-  const response = await fetch(url);
-  const blob = await response.blob();
-
-  const objectUrl = URL.createObjectURL(blob);
-
-  const a = document.createElement("a");
-  a.href = objectUrl;
-  a.download = fileName;
-  a.click();
-
-  URL.revokeObjectURL(objectUrl);
-};

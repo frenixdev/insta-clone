@@ -1,6 +1,6 @@
 import Loader from "@/shared/components/Loader";
-import Button from "@auth/components/Button";
-import useAuthStore from "../Store/auth.store";
+import Button from "@/shared/components/Button";
+import useAuthStore from "../store/auth.store";
 import { useShallow } from "zustand/shallow";
 
 const LogoutBtn = () => {
