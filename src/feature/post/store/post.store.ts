@@ -11,13 +11,13 @@ import type { PostType, TempPostPropsType } from "../types";
 
 type uploadPostParams = {
   caption: string;
-  file: File;
+  file: File ;
   username: string;
   profileImg: string;
 };
 interface PostStoreType {
   feed: PostType[];
-  error: string;
+  error: string | null;
   tempPost: TempPostPropsType | null;
   isLoading: boolean;
   errorLoading: boolean;

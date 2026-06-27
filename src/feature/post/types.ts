@@ -14,8 +14,8 @@ export interface PostType {
 }
 export interface PostPropsType extends PostType {
   isAuthor?: boolean;
-  toggleLike?: (postId: string) => Promise<void>;
-  deletePost?: (postId: string) => Promise<void>;
+  toggleLike: (postId: string) => Promise<void>;
+  deletePost: (postId: string) => Promise<void>;
 }
 
 export interface TempPostPropsType {

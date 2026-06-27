@@ -7,15 +7,17 @@ import { motion } from "motion/react";
 
 const CreatePostModal = () => {
   const [caption, setCaption] = useState("");
-  const imageRef = useRef<HTMLInputElement>(null);
+  const imageRef = useRef<HTMLInputElement | null>(null);
   const navigate = useNavigate();
   const uploadPost = usePostStore((s) => s.uploadPost);
   const user = useAuthStore((s) => s.user);
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const file = imageRef?.current?.files?.[0];
+    if(!file || !user) return ;
     const post = {
       caption,
-      file: imageRef.current?.files[0],
+      file,
       username: user.username,
       profileImg: user.profileImg,
     };

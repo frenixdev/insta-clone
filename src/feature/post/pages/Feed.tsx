@@ -42,7 +42,7 @@ const Feed = () => {
               {...post}
               toggleLike={Post.toggleLike}
               deletePost={Post.deletePost}
-              isAuthor={user.username === post.author.username}
+              isAuthor={user?.username === post.author.username}
             />
           ))}
     </section>

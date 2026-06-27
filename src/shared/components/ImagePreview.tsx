@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Input from "./Input";
-import { BiBorderInner } from "react-icons/bi";
 import { CiInboxOut } from "react-icons/ci";
 
 type Props = {
@@ -9,10 +8,13 @@ type Props = {
   itemRef: React.RefObject<HTMLInputElement | null>;
 };
 
-const ImagePreview = ({ width, height, itemRef }: Props) => {
+const ImagePreview = ({ width = "100%", height = "100%", itemRef }: Props) => {
   const [url, setUrl] = useState<string | null>(null);
+
   const handleInputChange = () => {
-    const url = URL.createObjectURL(itemRef.current.files[0]);
+    const file = itemRef?.current?.files?.[0];
+    if (!file) return;
+    const url = URL.createObjectURL(file);
     setUrl(url);
   };
   return (
@@ -22,12 +24,13 @@ const ImagePreview = ({ width, height, itemRef }: Props) => {
         className={`cursor-pointer block`}
         style={{ width, height }}
       >
-        <img
-          src={url}
-          hidden={!url}
-          alt={"image"}
-          className="w-1/2 h-auto object-contain mx-auto"
-        />
+        {url && (
+          <img
+            src={url}
+            alt={"image"}
+            className="w-1/2 h-auto object-contain mx-auto"
+          />
+        )}
         {!url && (
           <div className="flex items-center justify-center flex-col border border-dashed p-5 ">
             <CiInboxOut className="w-30 h-30 text-zinc-400" />
